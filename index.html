@@ -4,6 +4,11 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Dhivya Shri S — AI Engineer & Cybersecurity</title>
+<meta name="description" content="Portfolio of Dhivya Shri S, an AI engineer building explainable healthcare AI and behavioral cybersecurity systems."/>
+<meta name="theme-color" content="#111827"/>
+<meta property="og:title" content="Dhivya Shri S — AI Engineer & Cybersecurity"/>
+<meta property="og:description" content="Explore Dhivya's work in explainable AI, computer vision, and behavioral cybersecurity."/>
+<meta property="og:type" content="website"/>
   <!-- ═══════════════════════════════════════════════════════════
      ANIME MASCOT — Copy everything below & paste before </body>
 ═══════════════════════════════════════════════════════════ -->
@@ -328,6 +333,10 @@ html{scroll-behavior:smooth;font-size:16px}
 body{background:var(--canvas);color:var(--ink);font-family:var(--sans);line-height:1.65;-webkit-font-smoothing:antialiased}
 a{text-decoration:none;color:inherit}
 img{display:block;max-width:100%}
+button,input,textarea{font:inherit}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.skip-link{position:fixed;top:-3rem;left:1rem;z-index:1000;padding:.6rem 1rem;background:var(--gold);color:var(--ink-on-gold);font-weight:700;border-radius:0 0 6px 6px}
+.skip-link:focus{top:0}
 ::-webkit-scrollbar{width:4px}
 ::-webkit-scrollbar-track{background:var(--canvas)}
 ::-webkit-scrollbar-thumb{background:var(--gold);border-radius:4px}
@@ -504,7 +513,11 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.06);padding
   .intern-period{text-align:left}
 }
 @media(max-width:640px){
-  .nav-links{display:none}
+  nav{height:auto;min-height:60px;gap:.75rem}
+  .nav-links{display:flex;gap:.9rem;max-width:48vw;overflow-x:auto;scrollbar-width:none}
+  .nav-links::-webkit-scrollbar{display:none}
+  .nav-links a{font-size:.72rem;white-space:nowrap}
+  .nav-cta{display:none}
   #hero{padding-top:80px}
   .hero-metrics{gap:1.5rem}
   .project-row{display:flex;flex-direction:column}
@@ -512,11 +525,16 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.06);padding
   .form-row{grid-template-columns:1fr}
   footer{flex-direction:column;align-items:flex-start}
 }
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
 </style>
 </head>
 <body>
 
-<nav>
+<a class="skip-link" href="#hero">Skip to content</a>
+<nav aria-label="Primary navigation">
   <div class="nav-brand">
     <div class="brand-mark">DS</div>
     <div>
@@ -999,11 +1017,11 @@ footer{background:var(--navy);border-top:1px solid rgba(255,255,255,.06);padding
     <div class="contact-layout">
       <form class="contact-form appear" onsubmit="handleSubmit(event)">
         <div class="form-row">
-          <div class="fg"><label>Name</label><input type="text" placeholder="Your name" required/></div>
-          <div class="fg"><label>Email</label><input type="email" placeholder="you@email.com" required/></div>
+          <div class="fg"><label for="contact-name">Name</label><input id="contact-name" name="name" type="text" placeholder="Your name" autocomplete="name" required/></div>
+          <div class="fg"><label for="contact-email">Email</label><input id="contact-email" name="email" type="email" placeholder="you@email.com" autocomplete="email" required/></div>
         </div>
-        <div class="fg"><label>Subject</label><input type="text" placeholder="Collaboration / Research / Opportunity"/></div>
-        <div class="fg"><label>Message</label><textarea placeholder="Tell me about your project or idea..."></textarea></div>
+        <div class="fg"><label for="contact-subject">Subject</label><input id="contact-subject" name="subject" type="text" placeholder="Collaboration / Research / Opportunity"/></div>
+        <div class="fg"><label for="contact-message">Message</label><textarea id="contact-message" name="message" placeholder="Tell me about your project or idea..." required></textarea></div>
         <button type="submit" class="btn-send">Send Message →</button>
       </form>
       <div class="contact-right appear delay-2">
@@ -1070,16 +1088,16 @@ window.addEventListener('scroll', () => {
 
 function handleSubmit(e) {
   e.preventDefault();
-  const btn = e.target.querySelector('.btn-send');
-  btn.textContent = '✓ Sent!';
-  btn.style.background = '#22c55e';
-  btn.style.color = '#fff';
-  setTimeout(() => {
-    btn.textContent = 'Send Message →';
-    btn.style.background = '';
-    btn.style.color = '';
-    e.target.reset();
-  }, 3000);
+  const form = e.target;
+  const data = new FormData(form);
+  const subject = data.get('subject') || 'Portfolio enquiry';
+  const body = [
+    `Name: ${data.get('name')}`,
+    `Email: ${data.get('email')}`,
+    '',
+    data.get('message')
+  ].join('\n');
+  window.location.href = `mailto:dhivyashri1385@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 </script>
 </body>
